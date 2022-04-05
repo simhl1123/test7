@@ -82,7 +82,7 @@ def AddEmp():
 
 
 
-
+@app.route("/addemp1", methods=['GET', 'POST'])
 def addemp1():
     return render_template('AddEmp.html')
 
