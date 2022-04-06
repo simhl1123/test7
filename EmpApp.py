@@ -3,6 +3,7 @@ from pymysql import connections
 import os
 import boto3
 from config import *
+# import mysql.connector
 
 app = Flask(__name__)
 
@@ -31,6 +32,14 @@ def about():
     return render_template('www.intellipaat.com')
 
 
+# @app.route("/getemp", methods=['POST'])
+# def GetEmp():
+#     emp_id = request.form['emp_id']
+#     insert_sql = "INSERT INTO test1 VALUES (%s)"
+#     cursor = db_conn.cursor()
+
+
+
 @app.route("/addemp", methods=['POST'])
 def AddEmp():
     emp_id = request.form['emp_id']
@@ -50,7 +59,11 @@ def AddEmp():
 
         cursor.execute(insert_sql, (emp_id, first_name, Payscale, Department, Hire_Date))
         db_conn.commit()
+        empl_id = "" + emp_id 
         emp_name = "" + first_name 
+        emp_Payscale = "" + Payscale 
+        emp_Department = "" + Department 
+        emp_Hire_Date = "" + Hire_Date 
         # Uplaod image file in S3 #
         emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
         s3 = boto3.resource('s3')
@@ -78,13 +91,18 @@ def AddEmp():
         cursor.close()
 
     print("all modification done...")
-    return render_template('AddEmpOutput.html', name=emp_name)
-
+    return render_template('AddEmpOutput.html', id=empl_id, name=emp_name, Payscale=emp_Payscale, Department=emp_Department, Date=emp_Hire_Date)
 
 
 @app.route("/addemp1", methods=['GET', 'POST'])
 def addemp1():
     return render_template('AddEmp.html')
 
+# @app.route("/getemp", methods=['GET', 'POST'])
+# def getemp():
+#     return render_template('GetEmp.html')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
+
+
