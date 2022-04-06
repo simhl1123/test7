@@ -3,7 +3,6 @@ from pymysql import connections
 import os
 import boto3
 from config import *
-# import mysql.connector
 
 app = Flask(__name__)
 
@@ -30,14 +29,6 @@ def home():
 @app.route("/about", methods=['POST'])
 def about():
     return render_template('www.intellipaat.com')
-
-
-# @app.route("/getemp", methods=['POST'])
-# def GetEmp():
-#     emp_id = request.form['emp_id']
-#     insert_sql = "INSERT INTO test1 VALUES (%s)"
-#     cursor = db_conn.cursor()
-
 
 
 @app.route("/addemp", methods=['POST'])
@@ -98,11 +89,5 @@ def AddEmp():
 def addemp1():
     return render_template('AddEmp.html')
 
-# @app.route("/getemp", methods=['GET', 'POST'])
-# def getemp():
-#     return render_template('GetEmp.html')
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
-
-
